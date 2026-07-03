@@ -1,11 +1,16 @@
+# Python
 __pycache__/
-
 *.pyc
 
-models/*.pkl
+# Virtual Environment
+.env
+venv/
+.venv/
 
+# IDE
 .vscode/
-
 .idea/
 
-.env
+# Generated Files
+prediction_history.csv
+reports/

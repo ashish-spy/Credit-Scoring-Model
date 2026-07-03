@@ -11,8 +11,25 @@
 
 <body>
 
-<div class="container">
+  
 
+
+<div class="container">
+  <nav class="navbar">
+
+    <div class="logo">
+
+        🏦 Credit Scoring System
+
+    </div>
+
+    <div class="nav-right">
+
+        Machine Learning Project
+
+    </div>
+
+</nav>  
 <div class="card">
 
 <h1>🏦 Credit Scoring Prediction</h1>
@@ -20,7 +37,41 @@
 <p class="subtitle">
 Predict customer creditworthiness using Machine Learning
 </p>
+<div class="dashboard">
 
+    <div class="dashboard-card">
+
+        <h3>🤖 Model</h3>
+
+        <h2>{{ best_model_name }}</h2>
+
+    </div>
+
+    <div class="dashboard-card">
+
+        <h3>🎯 Accuracy</h3>
+
+        <h2>{{ model_accuracy }}%</h2>
+
+    </div>
+
+    <div class="dashboard-card">
+
+        <h3>📊 Dataset</h3>
+
+        <h2>{{ dataset_size }}</h2>
+
+    </div>
+
+    <div class="dashboard-card">
+
+        <h3>📈 Features</h3>
+
+        <h2>{{ feature_count }}</h2>
+
+    </div>
+
+</div>
 <form action="/predict" method="POST">
 
 <div class="grid">
@@ -214,20 +265,68 @@ Predict Credit Score
     Reset
 </button>
 </form>
+<hr>
 
+<h2>📈 Model Evaluation</h2>
+
+<div class="graphs">
+
+    <img src="{{ url_for('static', filename='confusion_matrix.png') }}">
+
+    <img src="{{ url_for('static', filename='roc_curve.png') }}">
+
+    <img src="{{ url_for('static', filename='feature_importance.png') }}">
+
+</div>
 {% if prediction %}
 
-<div class="result">
+<div class="result-card">
 
-    <h2>{{ prediction }}</h2>
+    <div class="result-header">
 
-    <h3>Confidence : {{ confidence }}%</h3>
-    <p>{{ message }}</p>
-    <div class="progress">
+        <h2>Prediction Result</h2>
 
-        <div class="progress-fill"
-             style="width: {{ confidence }}%;">
+        <span class="badge">
+            {{ prediction }}
+        </span>
 
+    </div>
+
+    <div class="result-body">
+
+        <div class="info">
+
+            <h3>Confidence Score</h3>
+
+            <h1>{{ confidence }}%</h1>
+
+        </div>
+
+        <div class="progress">
+
+            <div class="progress-fill"
+                 style="width: {{ confidence }}%;">
+
+            </div>
+
+        </div>
+
+        <div class="message-box">
+
+            <strong>Decision</strong>
+
+            <p>{{ message }}</p>
+         <br>
+
+<a href="/download-report">
+
+<button type="button">
+
+📄 Download Report
+
+</button>
+
+</a>
         </div>
 
     </div>
@@ -237,14 +336,15 @@ Predict Credit Score
 {% endif %}
 
 </div>
-
-</div>
-
-</body>
 <footer>
 
 Developed by Ashish Kumar © 2026
 
 </footer>
+
+</div>
+
+</body>
+
 
 </html>

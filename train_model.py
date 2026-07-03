@@ -211,3 +211,6 @@ if hasattr(best_model, "feature_importances_"):
     plt.close()
 
 print("\nGraphs saved successfully!")
+
+with open("models/accuracy.txt", "w") as f:
+    f.write(str(round(best_accuracy * 100, 2)))
