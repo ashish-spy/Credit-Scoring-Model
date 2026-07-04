@@ -9,16 +9,11 @@ from reportlab.lib.styles import getSampleStyleSheet
 
 app = Flask(__name__)
 
-# ============================
-# Load Model and Scaler
-# ============================
+
 
 model = joblib.load("models/credit_model.pkl")
 scaler = joblib.load("models/scaler.pkl")
 
-# ============================
-# Load Dataset Information
-# ============================
 
 df = pd.read_csv("data/german_credit_data.csv")
 comparison = pd.read_csv("outputs/model_comparison.csv")
@@ -31,16 +26,14 @@ feature_count = len(df.columns) - 1
 
 best_model_name = "Random Forest"
 
-# Read model accuracy
+
 with open("models/accuracy.txt", "r") as f:
     model_accuracy = f.read()
 
-# Store latest prediction
+
 last_prediction = {}
 
-# ============================
-# Home Page
-# ============================
+
 
 @app.route("/")
 def home():
@@ -54,9 +47,6 @@ def home():
         best_model_name=best_model_name
     )
 
-# ============================
-# Prediction
-# ============================
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -116,9 +106,6 @@ def predict():
             "defaulting on the loan."
         )
 
-    # ============================
-    # Save Prediction History
-    # ============================
 
     history = {
         "Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -143,9 +130,7 @@ def predict():
             index=False
         )
 
-    # ============================
-    # Store Last Prediction
-    # ============================
+
 
     last_prediction = {
 
@@ -169,9 +154,7 @@ def predict():
         best_model_name=best_model_name
     )
 
-# ============================
-# Download PDF Report
-# ============================
+
 
 @app.route("/download-report")
 def download_report():
@@ -186,7 +169,7 @@ def download_report():
 
     story = []
 
-    # Title
+    
     story.append(Paragraph(
         "<font size=22><b>Credit Scoring Prediction Report</b></font>",
         styles["Title"]
@@ -232,9 +215,7 @@ def download_report():
 
     return send_file(pdf_path, as_attachment=True)
 
-# ============================
-# Run Application
-# ============================
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5002)
